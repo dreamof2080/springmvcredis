@@ -46,6 +46,7 @@
     <load-on-startup>2</load-on-startup>
   </servlet>
 
+  <!--配置后无法访问静态页面-->
   <servlet-mapping>
     <servlet-name>mvc</servlet-name>
     <url-pattern>/</url-pattern>
