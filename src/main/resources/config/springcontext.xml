@@ -18,4 +18,9 @@
   <!--<bean id="memberService" class="com.pudp.bae.service.MemberService"/>-->
 
   <import resource="classpath*:/config/rediscontext.xml"/>
+
+  <!--静态资源文件路径映射-->
+  <mvc:resources location="/js/" mapping="/js/**"/>
+  <mvc:resources location="/css/" mapping="/css/**"/>
+  <mvc:resources location="/image/" mapping="/image/**"/>
 </beans>
