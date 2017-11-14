@@ -19,7 +19,7 @@ public class NginxController extends BaseMultiController {
   @Autowired
   private NginxService nginxService;
 
-  @RequestMapping(value = "/status.do")
+  @RequestMapping(value = "/status")
   public ModelAndView status(){
     return toView("/nginx/status",null);
   }
