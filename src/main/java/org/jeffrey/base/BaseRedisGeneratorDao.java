@@ -2,6 +2,7 @@ package org.jeffrey.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.io.Serializable;
@@ -14,9 +15,8 @@ public abstract class BaseRedisGeneratorDao<K extends Serializable,V extends Ser
   @Autowired
   protected RedisTemplate<K,V> redisTemplate;
 
-  public void setRedisTemplate(RedisTemplate<K,V> redisTemplate){
-    this.redisTemplate = redisTemplate;
-  }
+  @Autowired
+  protected StringRedisTemplate stringRedisTemplate;
 
   protected RedisSerializer<String> getRedisSerializer(){
     return redisTemplate.getStringSerializer();

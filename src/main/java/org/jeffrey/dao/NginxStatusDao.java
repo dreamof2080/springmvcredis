@@ -7,6 +7,9 @@ import org.jeffrey.model.NginxStatus;
  * @author Jeffrey
  */
 public interface NginxStatusDao {
-    /** 向redis插入数据 **/
-    boolean add(NginxStatus nginxStatus);
+    /**
+     * 向redis插入数据
+     * @param nginxStatus
+     */
+    void add(NginxStatus nginxStatus);
 }
