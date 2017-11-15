@@ -28,12 +28,12 @@ public class NginxService {
     String date = jsonObject.getString("date");
     String time = jsonObject.getString("time");
     String total = jsonObject.getString("total");
-    NginxStatus nginxStatus = new NginxStatus(date+" "+time,total);
+    NginxStatus nginxStatus = new NginxStatus(date+" "+time,Integer.parseInt(total));
     this.add(nginxStatus);
     return jsonObject;
   }
 
-  private boolean add(NginxStatus nginxStatus){
-    return nginxStatusDao.add(nginxStatus);
+  private void add(NginxStatus nginxStatus){
+    nginxStatusDao.add(nginxStatus);
   }
 }
