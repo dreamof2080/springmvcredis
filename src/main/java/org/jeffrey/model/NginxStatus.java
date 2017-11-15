@@ -10,9 +10,9 @@ public class NginxStatus extends BaseModel {
     /** 日期时间 **/
     private String dateTime;
     /** 访问量 **/
-    private String activeConnections;
+    private Integer activeConnections;
 
-    public NginxStatus(String dateTime,String activeConnections){
+    public NginxStatus(String dateTime,Integer activeConnections){
         this.dateTime = dateTime;
         this.activeConnections = activeConnections;
     }
@@ -25,11 +25,11 @@ public class NginxStatus extends BaseModel {
         this.dateTime = dateTime;
     }
 
-    public String getActiveConnections() {
+    public Integer getActiveConnections() {
         return activeConnections;
     }
 
-    public void setActiveConnections(String activeConnections) {
+    public void setActiveConnections(Integer activeConnections) {
         this.activeConnections = activeConnections;
     }
 }
