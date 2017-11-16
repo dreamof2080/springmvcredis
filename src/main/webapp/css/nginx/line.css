@@ -1,0 +1,18 @@
+.header{
+    border-bottom: 1px solid #eee;
+}
+#main{
+    width: 98vw;
+    height:85vh;
+}
+
+#modal-body{
+    width: 800px;
+    height:800px;
+    margin-top: 10vh;
+}
+
+.text-center span{
+    color: #3c763d;
+    font-size: 25px;
+}

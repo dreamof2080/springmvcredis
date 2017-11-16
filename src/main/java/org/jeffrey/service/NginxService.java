@@ -33,7 +33,13 @@ public class NginxService {
     return jsonObject;
   }
 
+  public JSONObject getStatusList(String beginDate,String endDate){
+    return nginxStatusDao.getNginxStatusList(beginDate,endDate);
+  }
+
   private void add(NginxStatus nginxStatus){
     nginxStatusDao.add(nginxStatus);
   }
+
+
 }

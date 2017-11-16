@@ -1,6 +1,9 @@
 package org.jeffrey.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.model.NginxStatus;
+
+import java.util.List;
 
 /**
  * nginx访问状态信息Dao
@@ -12,4 +15,12 @@ public interface NginxStatusDao {
      * @param nginxStatus
      */
     void add(NginxStatus nginxStatus);
+
+    /**
+     * 根据日期获取nginxStatus的集合
+     * @param beginDate 开始日期
+     * @param endDate 结束日期
+     * @return
+     */
+    JSONObject getNginxStatusList(String beginDate, String endDate);
 }

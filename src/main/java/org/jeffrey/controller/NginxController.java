@@ -19,6 +19,11 @@ public class NginxController extends BaseMultiController {
   @Autowired
   private NginxService nginxService;
 
+  @RequestMapping(value = "/test")
+  public ModelAndView test(){
+    return toView("/nginx/test",null);
+  }
+
   @RequestMapping(value = "/status")
   public ModelAndView status(){
     return toView("/nginx/status",null);
@@ -28,6 +33,13 @@ public class NginxController extends BaseMultiController {
   @RequestMapping(value = "/getStatus")
   public String getStatus(@RequestParam("url") String url){
     JSONObject jsonObject = nginxService.getStatus(url);
+    return JSONObject.toJSONString(jsonObject);
+  }
+
+  @ResponseBody
+  @RequestMapping(value = "/getStatusList")
+  public String getStatusList(){
+    JSONObject jsonObject = nginxService.getStatusList("2017-11-15","2017-11-15");
     return JSONObject.toJSONString(jsonObject);
   }
 }

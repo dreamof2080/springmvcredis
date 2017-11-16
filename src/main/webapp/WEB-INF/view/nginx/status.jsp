@@ -1,24 +1,52 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dream
-  Date: 2017-11-13
-  Time: 22:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
   <title>NginxStatus</title>
+  <link rel="stylesheet" type="text/css" href="/css/nginx/line.css" />
+  <link rel="stylesheet" type="text/css" href="/plugin/bootstrap-3.3.7-dist/css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="/plugin/bootstrap-3.3.7-dist/css/bootstrap-theme.css" />
   <script src="/js/echarts/echarts.min.js"></script>
   <script src="/js/jquery/jquery-3.2.1.min.js"></script>
+  <script src="/plugin/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
 <body>
-<div id="main" style="width: 100vw;height:90vh;"></div>
+<div class="header">
+  <h3 class="text-center">OA连接数监控</h3>
+</div>
+<div class="text-center" data-toggle="collapse" href="#collapseOne">
+  <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+</div>
+
+<div id="collapseOne" class="accordion-body collapse" style="height: 0px;" showCollapseButton="true">
+  历史查询:
+  开始日期:<input type="text"/>
+  结束日期:<input type="text"/>
+  <a>查询</a>
+</div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body" id="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="main"></div>
 <script>
   var myChart = echarts.init(document.getElementById('main'));
   function getData() {
-    var url = "http://oa.bestlink.com.cn:8088/status";
-    var htmlobj = $.ajax({url: "/nginxInfo/getStatus",data:{url:url},dataType:"json", async: false});
+    var url = 'http://oa.bestlink.com.cn:8088/status';
+    var htmlobj = $.ajax({url: '/nginxInfo/getStatus',data:{url:url},dataType:'json', async: false});
     var json = JSON.parse(htmlobj.responseText);
     var total = json.total;
     var time = json.time;
@@ -32,7 +60,7 @@
   var lineData = [];
   option = {
     title: {
-      text: 'Nginx连接数监控',
+      text: '',
       x: 'left'
     },
     tooltip: {
@@ -92,7 +120,7 @@
     yAxis: [{
       type: 'value',
       max: 2000,
-      name: '单位:个',
+      name: '',
       min: 0,
       interval: 100
     }, {
@@ -184,6 +212,26 @@
       }]
     });
   }, 5000);
+
+
+  var myChart2 = echarts.init(document.getElementById('modal-body'));
+  function show1() {
+      myChart2.setOption(option);
+      var htmlobj = $.ajax({url: '/nginxInfo/getStatusList',dataType:'json', async: false});
+      var json = JSON.parse(htmlobj.responseText);
+      var timeData_tmp = json.timeData;
+      var lineData_tmp = json.lineData;
+      console.log(lineData_tmp);
+      myChart2.setOption({
+          xAxis:[{
+              data:timeData_tmp
+          }],
+          series: [{
+              data: lineData_tmp
+          }]
+      });
+      $('#modal').modal('toggle');
+  }
 </script>
 </body>
 </html>
