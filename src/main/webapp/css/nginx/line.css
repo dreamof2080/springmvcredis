@@ -2,8 +2,9 @@
     border-bottom: 1px solid #eee;
 }
 #main{
-    width: 98vw;
-    height:85vh;
+    margin:0 auto;
+    width: 85%;
+    height:90%;
 }
 
 #modal-body{
@@ -15,4 +16,8 @@
 .text-center span{
     color: #3c763d;
     font-size: 25px;
+}
+
+#collapseOne{
+    text-align: center;
 }
