@@ -58,8 +58,7 @@
     var myChart = echarts.init(document.getElementById('main'));
     /** 动态获取数据 **/
     function getData() {
-        var url = 'http://oa.bestlink.com.cn:8088/status';
-        var htmlobj = $.ajax({url: '/nginxInfo/getStatus',data:{url:url},dataType:'json', async: false});
+        var htmlobj = $.ajax({url: '/nginxInfo/getStatus',dataType:'json', async: false});
         var json = JSON.parse(htmlobj.responseText);
         var total = json.total;
         var time = json.time;
