@@ -11,9 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * nginxstatusDao实现类
@@ -35,6 +33,8 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
         String date_tmp = "";
         JSONObject jsonObject = new JSONObject();
         ValueOperations<String,String> valueOperations = stringRedisTemplate.opsForValue();
+        List<String> keyList = new ArrayList<>();
+        List<String> valueList = new ArrayList<>();
         try {
             if(simpleDateFormat.parse(beginDate).getTime()>simpleDateFormat.parse(endDate).getTime()){
                 return null;
@@ -44,9 +44,13 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
                 date_tmp = simpleDateFormat.format(calendar.getTime());
                 String keyPattern = KeyUtils.nginxStatus(date_tmp)+"*";
                 Set<String> keySet = stringRedisTemplate.keys(keyPattern);
-                List<String> valueList = valueOperations.multiGet(keySet);
-                jsonObject.put("timeData",keySet);
-                jsonObject.put("lineData",valueList);
+                JSONObject jsonObject_tmp = conversionData(keySet);
+                Set<String> newKeySet = (Set<String>)jsonObject_tmp.get("keySet");
+                List<String> keyList_tmp = (List<String>)jsonObject_tmp.get("keyList");
+                List<String> valueList_tmp = valueOperations.multiGet(newKeySet);
+                keyList.addAll(keyList_tmp);
+                valueList.addAll(valueList_tmp);
+
                 if(date_tmp.equals(endDate)){
                     flag = false;
                 }else{
@@ -56,6 +60,28 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        jsonObject.put("timeData",keyList);
+        jsonObject.put("lineData",valueList);
+        return jsonObject;
+    }
+
+    /**
+     * 把无序的set转换成有序的set，并替换掉标识符生成一个新的list
+     * @param keySet
+     * @return keyList:替换标识符后的有序的key;keySet：有序的set集合
+     */
+    private JSONObject conversionData(Set<String> keySet){
+        JSONObject jsonObject = new JSONObject();
+        List<String> keyList = new ArrayList<>(keySet);
+        Collections.sort(keyList);
+        Set<String> newKeySet = new TreeSet<>(keyList);
+
+        for(int i=0;i<keyList.size();i++){
+            keyList.set(i,keyList.get(i).replace(KeyUtils.nginxStatus(""),""));
+        }
+
+        jsonObject.put("keyList",keyList);
+        jsonObject.put("keySet",newKeySet);
         return jsonObject;
     }
 

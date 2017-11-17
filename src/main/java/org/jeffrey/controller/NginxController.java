@@ -43,8 +43,8 @@ public class NginxController extends BaseMultiController {
 
   @ResponseBody
   @RequestMapping(value = "/getStatusList")
-  public String getStatusList(){
-    JSONObject jsonObject = nginxService.getStatusList("2017-11-15","2017-11-15");
+  public String getStatusList(@RequestParam("beginDate") String beginDate,@RequestParam("endDate") String endDate){
+    JSONObject jsonObject = nginxService.getStatusList(beginDate,endDate);
     return JSONObject.toJSONString(jsonObject);
   }
 }
