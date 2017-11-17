@@ -3,7 +3,8 @@ package org.jeffrey.service;
 import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.dao.NginxStatusDao;
 import org.jeffrey.model.NginxStatus;
-import org.jeffrey.util.HttpRequestUtils;
+import org.jeffrey.task.NginxStatusTask;
+import org.jeffrey.util.HttpRequestUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,12 +20,12 @@ public class NginxService {
   private NginxStatusDao nginxStatusDao;
 
   /**
-   * 获取nginx的status相关数据
+   * 获取nginx连接数信息
    * @param url
    * @return
    */
   public JSONObject getStatus(String url){
-    JSONObject jsonObject = HttpRequestUtils.httpGetNginxRequestNums(url);
+    JSONObject jsonObject = HttpRequestUtil.httpGetNginxRequestNums(url);
     String date = jsonObject.getString("date");
     String time = jsonObject.getString("time");
     String total = jsonObject.getString("total");
@@ -33,11 +34,29 @@ public class NginxService {
     return jsonObject;
   }
 
+  /**
+   * 从定时任务中获取nginx连接数
+   * @return
+   */
+  public JSONObject getStatusByTask(){
+    return NginxStatusTask.jsonObject;
+  }
+
+  /**
+   * 获取某个区间内的连接数信息
+   * @param beginDate
+   * @param endDate
+   * @return
+   */
   public JSONObject getStatusList(String beginDate,String endDate){
     return nginxStatusDao.getNginxStatusList(beginDate,endDate);
   }
 
-  private void add(NginxStatus nginxStatus){
+  /**
+   * 向redis中插入nginx连接数信息
+   * @param nginxStatus
+   */
+  public void add(NginxStatus nginxStatus){
     nginxStatusDao.add(nginxStatus);
   }
 
