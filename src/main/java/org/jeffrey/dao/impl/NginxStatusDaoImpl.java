@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.base.BaseRedisGeneratorDao;
 import org.jeffrey.dao.NginxStatusDao;
 import org.jeffrey.model.NginxStatus;
-import org.jeffrey.util.KeyUtils;
+import org.jeffrey.util.KeyUtil;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +22,7 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
     @Override
     public void add(final NginxStatus nginxStatus) {
         ValueOperations<String,String> valueOperations = stringRedisTemplate.opsForValue();
-        valueOperations.set(KeyUtils.nginxStatus(nginxStatus.getDateTime()),nginxStatus.getActiveConnections()+"");
+        valueOperations.set(KeyUtil.nginxStatus(nginxStatus.getDateTime()),nginxStatus.getActiveConnections()+"");
     }
 
     @Override
@@ -42,7 +42,7 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
             calendar.setTime(simpleDateFormat.parse(beginDate));
             while(flag){
                 date_tmp = simpleDateFormat.format(calendar.getTime());
-                String keyPattern = KeyUtils.nginxStatus(date_tmp)+"*";
+                String keyPattern = KeyUtil.nginxStatus(date_tmp)+"*";
                 Set<String> keySet = stringRedisTemplate.keys(keyPattern);
                 JSONObject jsonObject_tmp = conversionData(keySet);
                 Set<String> newKeySet = (Set<String>)jsonObject_tmp.get("keySet");
@@ -77,7 +77,7 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
         Set<String> newKeySet = new TreeSet<>(keyList);
 
         for(int i=0;i<keyList.size();i++){
-            keyList.set(i,keyList.get(i).replace(KeyUtils.nginxStatus(""),""));
+            keyList.set(i,keyList.get(i).replace(KeyUtil.nginxStatus(""),""));
         }
 
         jsonObject.put("keyList",keyList);
