@@ -2,6 +2,7 @@ package org.jeffrey.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.base.BaseMultiController;
+import org.jeffrey.service.InitService;
 import org.jeffrey.service.NginxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,28 +20,27 @@ public class NginxController extends BaseMultiController {
   @Autowired
   private NginxService nginxService;
 
+  /** 测试用 **/
   @RequestMapping(value = "/test")
   public ModelAndView test(){
     return toView("/nginx/test",null);
   }
 
+  /** 跳转到status页面，用echarts监控目前nginx连接数的情况 **/
   @RequestMapping(value = "/status")
   public ModelAndView status(){
     return toView("/nginx/status",null);
   }
 
-  @RequestMapping(value = "/status2")
-  public ModelAndView status2(){
-    return toView("/nginx/status2",null);
-  }
-
+  /** 获取nginx连接数 **/
   @ResponseBody
   @RequestMapping(value = "/getStatus")
-  public String getStatus(@RequestParam("url") String url){
-    JSONObject jsonObject = nginxService.getStatus(url);
+  public String getStatus(){
+    JSONObject jsonObject = nginxService.getStatusByTask();
     return JSONObject.toJSONString(jsonObject);
   }
 
+  /** 获取某个区间内的连接数 **/
   @ResponseBody
   @RequestMapping(value = "/getStatusList")
   public String getStatusList(@RequestParam("beginDate") String beginDate,@RequestParam("endDate") String endDate){
