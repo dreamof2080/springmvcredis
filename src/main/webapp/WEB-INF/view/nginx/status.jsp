@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE HTML>
 <html>
 <head>
   <title>NginxStatus</title>
@@ -12,7 +13,7 @@
   <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body>
-<div class="container">
+
   <div class="header">
     <h3 class="text-center">OA连接数监控</h3>
   </div>
@@ -32,7 +33,6 @@
       </div>
       <input class="btn btn-info" type="button" value="查询" onclick="showData();">
     </form>
-
   </div>
   <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
@@ -53,7 +53,7 @@
   </div>
 
   <div id="main"></div>
-</div>
+
 
 <script>
   // 消息提示框初始化
@@ -239,6 +239,7 @@
       toastr.warning('请填写结束日期');
       return;
     }
+
     myChart2.setOption(option);
     var htmlobj = $.ajax({url: '/nginxInfo/getStatusList',dataType:'json', async: false});
     var json = JSON.parse(htmlobj.responseText);

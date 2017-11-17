@@ -29,6 +29,11 @@ public class NginxController extends BaseMultiController {
     return toView("/nginx/status",null);
   }
 
+  @RequestMapping(value = "/status2")
+  public ModelAndView status2(){
+    return toView("/nginx/status2",null);
+  }
+
   @ResponseBody
   @RequestMapping(value = "/getStatus")
   public String getStatus(@RequestParam("url") String url){
