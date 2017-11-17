@@ -26,7 +26,7 @@ import java.util.List;
  * Created by Jeffrey on 2017-11-13.
  * http请求工具类
  */
-public class HttpRequestUtils {
+public abstract class HttpRequestUtil {
 
   /**
    * post请求
