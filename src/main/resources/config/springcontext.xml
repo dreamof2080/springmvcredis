@@ -2,10 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
   <bean id="freemarkerConfig"
         class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -25,12 +29,15 @@
   <!-- 激活@Controller模式 -->
   <mvc:annotation-driven />
 
-  <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能 需要更改 -->
+  <!--定时任务-->
+  <task:annotation-driven scheduler="taskScheduler"/>
+  <task:scheduler id="taskScheduler" pool-size="10"/>
+
+  <!-- 对包中的所有类进行扫描，以完成Bean创建和自动依赖注入的功能-->
   <context:component-scan base-package="org.jeffrey.dao.impl" />
   <context:component-scan base-package="org.jeffrey.service" />
   <context:component-scan base-package="org.jeffrey.controller" />
-
-  <!--<bean id="memberService" class="com.pudp.bae.service.MemberService"/>-->
+  <context:component-scan base-package="org.jeffrey.task" />
 
   <import resource="classpath*:/config/rediscontext.xml"/>
 
@@ -39,4 +46,5 @@
   <mvc:resources location="/css/" mapping="/css/**"/>
   <mvc:resources location="/image/" mapping="/image/**"/>
   <mvc:resources location="/plugin/" mapping="/plugin/**"/>
+
 </beans>
