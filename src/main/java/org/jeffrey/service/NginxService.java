@@ -3,7 +3,7 @@ package org.jeffrey.service;
 import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.dao.NginxStatusDao;
 import org.jeffrey.model.NginxStatus;
-import org.jeffrey.task.NginxStatusTask;
+import org.jeffrey.task.action.NginxStatusAction;
 import org.jeffrey.util.HttpRequestUtil;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class NginxService {
    * @return
    */
   public JSONObject getStatusByTask(){
-    return NginxStatusTask.jsonObject;
+    return NginxStatusAction.jsonObject;
   }
 
   /**
