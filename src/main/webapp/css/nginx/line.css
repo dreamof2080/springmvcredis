@@ -16,6 +16,10 @@
     text-align: center;
 }
 
-#modal-body {
+#oldData {
+    height: 70vh;
+}
+
+#analysisData {
     height: 70vh;
 }
