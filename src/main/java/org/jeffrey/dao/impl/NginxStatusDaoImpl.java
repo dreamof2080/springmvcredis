@@ -22,7 +22,12 @@ public class NginxStatusDaoImpl extends BaseRedisGeneratorDao<String,Integer> im
     @Override
     public void add(final NginxStatus nginxStatus) {
         ValueOperations<String,String> valueOperations = stringRedisTemplate.opsForValue();
-        valueOperations.set(KeyUtil.nginxStatus(nginxStatus.getDateTime()),nginxStatus.getActiveConnections()+"");
+        try {
+            valueOperations.set(KeyUtil.nginxStatus(nginxStatus.getDateTime()),nginxStatus.getActiveConnections()+"");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Override
