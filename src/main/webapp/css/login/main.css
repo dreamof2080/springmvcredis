@@ -78,6 +78,7 @@ h1 {
 }
 
 .log-btn {
+  cursor: pointer;
   background: #0AC986;
   dispaly: inline-block;
   width: 100%;
