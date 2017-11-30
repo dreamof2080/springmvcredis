@@ -4,16 +4,18 @@
 
 <web-app>
     <display-name>SpringMVCRedis</display-name>
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
 
+    <!--应用支持在分布式Web容器中部署-->
+    <distributable/>
+
+
+    <!--配置Spring Context 加载配置文件-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/config/springcontext.xml</param-value>
+        <param-value>classpath:/config/springcontext.xml</param-value>
     </context-param>
 
+    <!--字符编码Filter, 统一为UTF-8-->
     <filter>
         <filter-name>SpringEncodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter
@@ -35,6 +37,46 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+
+    <!--响应时启用GZIP压缩, 提高性能与网络传输-->
+    <!--GzipFilter -->
+    <filter>
+        <filter-name>gzipFilter</filter-name>
+        <filter-class>
+            net.sf.ehcache.constructs.web.filter.GzipFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.png</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.gif</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.jpeg</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.jpg</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>gzipFilter</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+
+
+    <!--Spring Security 拦截 Filter配置-->
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -45,6 +87,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+
+    <!--Spring Context 监听-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
+
+
+    <!--Spring MVC 配置-->
     <servlet>
         <servlet-name>mvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet
@@ -67,6 +118,11 @@
         <servlet-name>mvc</servlet-name>
         <url-pattern>/main/login</url-pattern>
     </servlet-mapping>
+
+    <!--配置Session 有效期时间 30分钟-->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
 
     <welcome-file-list>
         <welcome-file>main/login</welcome-file>
