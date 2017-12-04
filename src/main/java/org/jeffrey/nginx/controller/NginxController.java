@@ -1,9 +1,8 @@
-package org.jeffrey.controller;
+package org.jeffrey.nginx.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.base.BaseMultiController;
-import org.jeffrey.service.InitService;
-import org.jeffrey.service.NginxService;
+import org.jeffrey.nginx.service.NginxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

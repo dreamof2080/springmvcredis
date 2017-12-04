@@ -1,10 +1,10 @@
-package org.jeffrey.dao.impl;
+package org.jeffrey.nginx.dao.impl;
 
 
 import com.alibaba.fastjson.JSONObject;
 import org.jeffrey.base.BaseRedisGeneratorDao;
-import org.jeffrey.dao.NginxStatusDao;
-import org.jeffrey.model.NginxStatus;
+import org.jeffrey.nginx.dao.NginxStatusDao;
+import org.jeffrey.nginx.model.NginxStatus;
 import org.jeffrey.util.KeyUtil;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;

@@ -1,9 +1,7 @@
-package org.jeffrey.dao;
+package org.jeffrey.nginx.dao;
 
 import com.alibaba.fastjson.JSONObject;
-import org.jeffrey.model.NginxStatus;
-
-import java.util.List;
+import org.jeffrey.nginx.model.NginxStatus;
 
 /**
  * nginx访问状态信息Dao

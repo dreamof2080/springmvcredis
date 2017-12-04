@@ -1,11 +1,11 @@
-package org.jeffrey.model;
+package org.jeffrey.nginx.model;
 
-import org.jeffrey.base.BaseModel;
+import java.io.Serializable;
 
 /**
  * nginx访问状态实体类
  */
-public class NginxStatus extends BaseModel {
+public class NginxStatus implements Serializable {
 
     /** 日期时间 **/
     private String dateTime;

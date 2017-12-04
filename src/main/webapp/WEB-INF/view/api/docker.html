@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Docker</title>
+    <link href="/image/nomal/icon.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet prefetch' href='/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+<body data-spy="scroll" data-target=".scrollspy">
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Docker配置与应用</h1>
+        <h3><span class="fa fa-pencil"></span> Build, Ship, and Run Any App, Anywhere.</h3>
+        <h3><span class="fa fa-pencil"></span> Docker is the world’s leading software containerization platform.</h3>
+    </div>
+</div>
+<!--end of .jumbotron-->
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3 scrollspy">
+            <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
+                <li><a href="#dockerinfo">什么是Docker</a>
+                </li>
+                <li><a href="#dockerBetter">Docker的优势</a>
+                </li>
+                <li><a href="#dockerConcept">镜像容器和仓库</a>
+                    <ul class="nav">
+                        <li><a href="#dockerImage"><span class="fa fa-angle-double-right"></span>镜像</a>
+                        </li>
+                        <li><a href="#dockerContainer"><span class="fa fa-angle-double-right"></span>容器</a>
+                        </li>
+                        <li><a href="#dockerRepository"><span class="fa fa-angle-double-right"></span>仓库</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#installDocker">安装Docker</a>
+                </li>
+                <li><a href="#tomcat6image">创建Tomcat镜像</a>
+                </li>
+                <li><a href="#dockerCommand">Docker相关命令</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            <h2 id="dockerinfo">什么是Docker</h2>
+            <p>Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的Linux机器上，也可以实现虚拟化，容器是完全使用沙箱机制，相互之间不会有任何接口。（From:百度百科）</p>
+
+            <div class="bs-callout bs-callout-warning">
+                <h4>Docker的历史</h4>
+                <p>Docker是一个开源项目，诞生于2013 年初，最初是	dotCloud 公司内部的一个业余项目。它基于	Google 公司推出的	 Go	语言实现。
+                    项目后来加入了 Linux 基金会，遵从了 Apache	2.0	协议，项目代码在 GitHub上进行维护。</p>
+            </div>
+
+            <div class="bs-callout bs-callout-warning">
+                <h4>Docker的基础</h4>
+                <p>Docker项目的目标是实现轻量级的操作系统虚拟化解决方案。	Docker的基础是Linux容器（LXC）等技术。在LXC	的基础上Docker进行了进一步的封装，让用户不需要去关心容器的管理，使得操作更为简便。用
+                    户操作Docker的容器就像操作一个快速轻量级的虚拟机一样简单</p>
+            </div>
+
+            <h2 id="dockerBetter">Docker的优势</h2>
+            <p>作为一种新兴的虚拟化方式，Docker	跟传统的虚拟化方式相比具有众多的优势。
+                首先，Docker	容器的启动可以在秒级实现，这相比传统的虚拟机方式要快得多。 其次，Docker	对系统资
+                源的利用率很高，一台主机上可以同时运行数千个	Docker	容器。
+                容器除了运行其中应用外，基本不消耗额外的系统资源，使得应用的性能很高，同时系统的开销尽量小。
+                传统虚拟机方式运行	10	个不同的应用就要起	10	个虚拟机，而Docker	只需要启动	10	个隔离的应用即可。
+                具体说来，Docker	在如下几个方面具有较大的优势:</p>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <colgroup>
+                        <col class="col-xs-2">
+                        <col class="col-xs-5">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">更快速的交付和部署</th>
+                        <td>对开发和运维（devop）人员来说，最希望的就是一次创建或配置，可以在任意地方正常运行。
+                            开发者可以使用一个标准的镜像来构建一套开发容器，开发完成之后，运维人员可以直接使用这个容器来
+                            部署代码。	Docker	可以快速创建容器，快速迭代应用程序，并让整个过程全程可见，使团队中的其他成员
+                            更容易理解应用程序是如何创建和工作的。	Docker	容器很轻很快！容器的启动时间是秒级的，大量地节约
+                            开发、测试、部署的时间。
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">更高效的虚拟化</th>
+                        <td>Docker	容器的运行不需要额外的	hypervisor	支持，它是内核级的虚拟化，因此可以实现更高的性能和效率。</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">更轻松的迁移和扩展</th>
+                        <td>Docker	容器几乎可以在任意的平台上运行，包括物理机、虚拟机、公有云、私有云、个人电脑、服务器
+                            等。 这种兼容性可以让用户把一个应用程序从一个平台直接迁移到另外一个。
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">更简单的管理</th>
+                        <td>使用	Docker，只需要小小的修改，就可以替代以往大量的更新工作。所有的修改都以增量的方式被分发和
+                            更新，从而实现自动化并且高效的管理。</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>对比传统虚拟机总结:</p>
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>特性</th>
+                        <th>容器</th>
+                        <th>虚拟机</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>启动</td>
+                        <td>秒级</td>
+                        <td>分钟级
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>硬盘使用</td>
+                        <td>一般为MB</td>
+                        <td>一般为GB</td>
+                    </tr>
+                    <tr>
+                        <td>性能</td>
+                        <td>接近原生</td>
+                        <td>弱于</td>
+                    </tr>
+                    <tr>
+                        <td>系统支持量</td>
+                        <td>单机支持上千个容器</td>
+                        <td>一般几十个</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 id="dockerConcept">镜像容器和仓库</h2>
+            <p id="dockerImage">镜像</p>
+            <div class="bs-callout bs-callout-warning">
+                <p>Docker	镜像就是一个只读的模板。</p>
+                <p>例如：一个镜像可以包含一个完整的	ubuntu	操作系统环境，里面仅安装了	Apache	或用户需要的其它应用程序。</p>
+                <p>镜像可以用来创建	Docker	容器。</p>
+                <p>Docker	提供了一个很简单的机制来创建镜像或者更新现有的镜像，用户甚至可以直接从其他人那里下载一个已经做好的镜像来直接使用。</p>
+            </div>
+            <p id="dockerContainer">容器</p>
+            <div class="bs-callout bs-callout-warning">
+                <p>Docker	利用容器来运行应用。</p>
+                <p>容器是从镜像创建的运行实例。它可以被启动、开始、停止、删除。每个容器都是相互隔离的、保证安全的平台。</p>
+                <p>可以把容器看做是一个简易版的	Linux	环境（包括root用户权限、进程空间、用户空间和网络空间等）和运行在其中的应用程序。</p>
+                <p>*注：镜像是只读的，容器在启动的时候创建一层可写层作为最上层。</p>
+            </div>
+            <p id="dockerRepository">仓库</p>
+            <div class="bs-callout bs-callout-warning">
+                <p>仓库是集中存放镜像文件的场所。有时候会把仓库和仓库注册服务器（Registry）混为一谈，并不严格区
+                    分。实际上，仓库注册服务器上往往存放着多个仓库，每个仓库中又包含了多个镜像，每个镜像有不同的
+                    标签（tag）。</p>
+                <p>仓库分为公开仓库（Public）和私有仓库（Private）两种形式。</p>
+                <p>最大的公开仓库是 Docker	Hub，存放了数量庞大的镜像供用户下载。 国内的公开仓库包括<a href="https://account.daocloud.io">daocloud</a>、<a href="https://dev.aliyun.com/search.html">阿里云</a>、<a href="https://c.163.com/">网易蜂巢</a>
+                    等，可以提供大陆用户更稳定快速的访问。</p>
+                <p>当然，用户也可以在本地网络内创建一个私有仓库。</p>
+                <p>当用户创建了自己的镜像之后就可以使用 	push	命令将它上传到公有或者私有仓库，这样下次在另外一台
+                    机器上使用这个镜像时候，只需要从仓库上 	pull	下来就可以了。</p>
+                <p>*注：Docker	仓库的概念跟 Git 类似，注册服务器可以理解为	GitHub	这样的托管服务。</p>
+            </div>
+
+            <h2 id="installDocker">安装Docker</h2>
+            <p>CentOS下安装Docker</p>
+            <figure class="highlight">
+                <ul>
+                    <li>安装Docker：<p><code>> yum -y install docker-io</code></p></li>
+                    <li>启动Docker服务：<p><code>> service docker start</code></p></li>
+                    <li>将Docker加入开机启动:<p><code>> chkconfig docker on</code></p></li>
+                </ul>
+            </figure>
+
+
+
+            <h2 id="tomcat6image">创建Tomcat镜像</h2>
+            <p>创建一个tomcat6+jdk1.6的镜像：</p>
+            <figure class="highlight">
+                <ul>
+                    <li>在/usr/local/下创建一个文件夹，作为创建docker image的临时文件夹：
+                        <p><code>> mkdir oadocker</code></p>
+                    </li>
+                    <li>
+                        <p>复制tomcat和jdk1.6.0_31到oadocker中(tomcat在/usr/local/下，jdk安装在/usr/java下):</p>
+                        <p><code>> cd /usr/local/ </code></p>
+                        <p><code>> cp -r tomcat /usr/local/oadocker/tomcat </code></p>
+                        <p><code>> cd /usr/java </code></p>
+                        <p><code>> cp -r jdk1.6.0_31 /usr/local/oadocker/jdk1.6.0_31 </code></p>
+                    </li>
+                    <li>编写Dockerfile文件
+                        <p><code>> cd /usr/local/oadocker </code></p>
+                        <p><code>> vim Dockerfile </code></p>
+                        <p><code>#使用的基础镜像</code></p>
+                        <p><code>FROM centos</code></p>
+
+                        <p><code>#作者信息</code></p>
+                        <p><code>MAINTAINER houpeng 1396996336@qq.com</code></p>
+
+                        <p><code>#创建目录</code></p>
+                        <p><code>RUN mkdir -p /oa/java/jdk1.6.0_31</code></p>
+
+                        <p><code>#把当前目录下的jdk文件夹添加到镜像中</code></p>
+                        <p><code>ADD jdk1.6.0_31 /oa/java/jdk1.6.0_31</code></p>
+
+                        <p><code>#创建tomcat目录</code></p>
+                        <p><code>RUN mkdir -p /oa/tomcat6</code></p>
+
+                        <p><code>#把当前目录下的tomcat文件夹添加到镜像中</code></p>
+                        <p><code>ADD tomcat /oa/tomcat6</code></p>
+
+                        <p><code>#添加jdk环境变量</code></p>
+                        <p><code>ENV JAVA_HOME /oa/java/jdk1.6.0_31</code></p>
+                        <p><code>ENV JRE_HOME $JAVA_HOME/jre</code></p>
+                        <p><code>ENV CLASSPATH .:$JAVA_HOME/lib:$JRE_HOME/lib</code></p>
+                        <p><code>ENV PATH $PATH:$JAVA_HOME/bin</code></p>
+
+                        <p><code>#配置tomcat的环境变量</code></p>
+                        <p><code>ENV CATALINA_HOME /oa/tomcat6</code></p>
+
+                        <p><code>#暴露8066端口，如果此镜像会启动多个容器，则可暴露多个端口</code></p>
+                        <p><code>EXPOSE 8066 8067 8068 8069</code></p>
+
+                        <p><code>#启动时运行tomcat</code></p>
+                        <p><code>CMD ["/oa/tomcat6/bin/catalina.sh","run"]</code></p>
+                    </li>
+                    <li>
+                        <p>创建镜像</p>
+                        <p><code>> docker build -t oa/tomcat6 --rm=true . </code></p>
+                    </li>
+                    <li>
+                        查看创建的镜像
+                        <p><code>> docker images oa/tomcat6 </code></p>
+                    </li>
+                    <li>
+                        运行镜像，启动容器
+                        <p><small>注：这里把server.xml和Logs、webapps文件夹作为外部挂载，context.xml作为外部挂载不生效，没找到原因</small></p>
+                        <p><code>端口映射为8066的容器：</code></p>
+                        <p><code>> docker run --name tomcat6_8066 -v /usr/local/tomcatconf/8066/conf/server.xml:/oa/tomcat6/conf/server.xml -v /usr/local/tomcatconf/8066/logs:/oa/tomcat6/logs -v /usr/local/oawebapps:/oa/tomcat6/webapps  -d -p 8066:8066  9d26777cf52d  </code></p>
+                        <p><code>端口映射为8067的容器：</code></p>
+                        <p><code>> docker run --name tomcat6_8067 -v /usr/local/tomcatconf/8067/conf/server.xml:/oa/tomcat6/conf/server.xml -v /usr/local/tomcatconf/8067/logs:/oa/tomcat6/logs -v /usr/local/oawebapps:/oa/tomcat6/webapps  -d -p 8067:8067  9d26777cf52d </code></p>
+                    </li>
+                </ul>
+            </figure>
+
+
+            <h2 id="dockerCommand">Docker Command</h2>
+            <p>Docker的相关命令总结</p>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            命令
+                        </th>
+                        <th>
+                            说明
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row"><code>docker images</code></th>
+                        <td>查看所有的镜像</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker rmi imageid</code></th>
+                        <td>删除某个镜像</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker tag dockerid respository:tag</code></th>
+                        <td>给镜像添加一个新的标签</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker rmi -f respository:tag</code></th>
+                        <td>删除某个标签</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>dockper ps</code></th>
+                        <td>查看运行中的docker容器</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker ps -a</code></th>
+                        <td>查看所有的docker容器</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker logs -f id</code></th>
+                        <td>查看容器的运行日志</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker top id</code></th>
+                        <td>查看容器的进程</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker inspect id</code></th>
+                        <td>查看容器的配置和状态信息</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>sudo docker exec -ti id /bin/bash</code></th>
+                        <td>进入某个容器</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>exit</code></th>
+                        <td>退出容器</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker stop id</code></th>
+                        <td>停止容器</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker start id</code></th>
+                        <td>启动容器</td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><code>docker rm id</code></th>
+                        <td>删除容器,删除容器时须先停止容器</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!--end of #mathematics-->
+        </div>
+
+    </div>
+    <!--end of .row-->
+</div>
+<!--end of .container-->
+
+
+
+<footer>
+    <p class="text-center">@Author Jeffrey.Liu &nbsp;@Email:906956368@qq.com
+    </p>
+</footer>
+</body>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script>
+    $('#nav').affix({
+        offset: {
+            top: $('#nav').offset().top,
+            bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
+        }
+    });
+
+</script>
+
+</body>
+
+</html>

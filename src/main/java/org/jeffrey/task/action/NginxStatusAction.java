@@ -1,7 +1,7 @@
 package org.jeffrey.task.action;
 
 import com.alibaba.fastjson.JSONObject;
-import org.jeffrey.service.NginxService;
+import org.jeffrey.nginx.service.NginxService;
 import org.jeffrey.task.TaskAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

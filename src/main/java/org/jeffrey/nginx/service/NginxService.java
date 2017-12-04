@@ -1,8 +1,8 @@
-package org.jeffrey.service;
+package org.jeffrey.nginx.service;
 
 import com.alibaba.fastjson.JSONObject;
-import org.jeffrey.dao.NginxStatusDao;
-import org.jeffrey.model.NginxStatus;
+import org.jeffrey.nginx.dao.NginxStatusDao;
+import org.jeffrey.nginx.model.NginxStatus;
 import org.jeffrey.task.action.NginxStatusAction;
 import org.jeffrey.util.HttpRequestUtil;
 import org.springframework.stereotype.Service;

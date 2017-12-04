@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>OA API</title>
+    <link href="/image/nomal/icon.png" rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="/plugin/bootstrap/css/bootstrap.min.css">
+    <link rel='stylesheet prefetch' href='/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+<body data-spy="scroll" data-target=".scrollspy">
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>OA运维规范</h1>
+        <h3><span class="fa fa-pencil"></span>规范代码，避免错误.</h3>
+    </div>
+</div>
+<!--end of .jumbotron-->
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3 scrollspy">
+            <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
+                <li><a href="#jsInfo">常用JS</a>
+                    <ul class="nav">
+                        <li><a href="#textInfo"><span class="fa fa-angle-double-right"></span>单行文本</a>
+                        </li>
+                        <li><a href="#selectInfo"><span class="fa fa-angle-double-right"></span>选择项</a>
+                        </li>
+                        <li><a href="#browserInfo"><span class="fa fa-angle-double-right"></span>关联选择</a>
+                        </li>
+                        <li><a href="#textareaInfo"><span class="fa fa-angle-double-right"></span>多行文本</a>
+                        </li>
+                        <li><a href="#attachInfo"><span class="fa fa-angle-double-right"></span>附件</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#interfaceInfo">接口编写规范</a>
+                    <ul class="nav">
+                        <li><a href="#localDataInterface"><span class="fa fa-angle-double-right"></span>数据库操作</a>
+                        </li>
+                        <li><a href="#mailInterface"><span class="fa fa-angle-double-right"></span>邮件发送</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#linuxInfo">Linux常用命令</a></li>
+                <li><a href="#permissionSet">权限配置规范</a>
+                </li>
+                <li><a href="#dbInfo">数据库操作规范</a>
+                    <ul class="nav">
+                        <li><a href="#offtenSql"><span class="fa fa-angle-double-right"></span>常用SQL</a>
+                        </li>
+                        <li><a href="#procedure"><span class="fa fa-angle-double-right"></span>数据库优化</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#tableInfo">系统表说明</a>
+                    <ul class="nav">
+                        <li><a href="#selectItemTable"><span class="fa fa-angle-double-right"></span>下拉框</a>
+                        </li>
+                        <li><a href="#browserTable"><span class="fa fa-angle-double-right"></span>关联选择</a>
+                        </li>
+                        <li><a href="#categoryTable"><span class="fa fa-angle-double-right"></span>分类</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            <section id="jsInfo">
+                <h2>常用JS</h2>
+                <p>规范表单中的JS书写规范，避免不同浏览器间的兼容性问题</p>
+                <h3 id="textInfo">单行文本</h3>
+                <p>单行文本包括文本、整数、浮点数、日期、时间、日期时间，不同类型的单行文本有自己独特的一些属性和对应的JS操作</p>
+
+                <p><strong>单行文本改变后触发某个方法：</strong></p>
+                <p><code>WeaverUtil.watch(document.getElementById('fieldId'),functionName);</code></p>
+
+                <p><strong>控制必填：</strong></p>
+                <p><code>setNeedCheck('fieldId',flag);</code></p>
+                <p>flag为true表示必填，false表示不必填</p>
+
+                <p><strong>单行文本赋值：</strong></p>
+                <div class="bs-callout bs-callout-info">
+                    <p>可编辑状态下单行文本赋值：</p>
+                    <p>原生方式：<code>document.getElementById('fieldId').value = 'value';</code></p>
+                    <p>jQuery方式：<code>jQuery('#fieldId').val('value');</code></p>
+                    <p>只读状态下单行文本赋值：</p>
+                    <p>原生方式：<p><code>document.getElementById('fieldId').value='value';</code></p><p><code>document.getElementById('fieldId').innerHTML='value';</code></p></p>
+                    <p>jQuery方式：<p><code>jQuery('#fieldId').val('value');</code></p><p><code>jQuery('#fieldId').text('value')</code></p></p>
+                </div>
+                <p><strong>获取单行文本的值：</strong></p>
+                <div class="bs-callout bs-callout-info">
+                    <p>可编辑状态下获取单行文本的值：</p>
+                    <p>原生方式：<code>document.getElementById('fieldId').value</code></p>
+                    <p>jQuery方式：<code>jQuery('#fieldId').val()</code></p>
+                    <p>只读状态下获取单行文本的值：</p>
+                    <p>原生方式：<code>document.getElementById('fieldId').innerHTML</code></p>
+                    <p>jQuery方式：<code>jQuery('#fieldId').text()</code></p>
+                </div>
+                <p><strong>可编辑状态下控制单行文本只读</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><p>1、通过调用setInputReadOnly()方法设置只读：</p><span class="nt">function setInputReadOnly(fieldid){
+    var obj = document.getElementById(fieldid);
+    obj.style.display = 'none';
+    var span = document.createElement('&lt;span&gt;');
+    span.innerHTML = obj.value;
+    obj.parentNode.appendChild(span);
+}</span><p>2、通过jQuery方式：</p><span class="nt">jQuery('#fieldId').attr('readonly','readonly');
+jQuery('#fieldId_span').remove();</span></code></pre></figure>
+
+                <p>单行文本为日期字段时需转换日期时间格式为：'2012/12/12 08:01:01' 此格式支持所有浏览器，解决浏览器兼容问题：</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">function dateFormatChange(DateOne){
+	var reg = new RegExp('-','g');
+	var DateOne = DateOne.replace(reg,'/');
+    return DateOne;
+}</span></code></pre></figure>
+
+                <p><strong>日期跨年跨月判断：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">function monthJudge(){
+	var beginDay = document.getElementById('field_297e55a647ed14950147ed3565b60002').value;
+	var endDay = document.getElementById('field_297e55a647ed14950147ed3566c10004').value;
+	if (beginDay && endDay)
+	{
+		var begin = new Date(Date.parse(dateFormatChange(beginDay)));
+		var end = new Date(Date.parse(dateFormatChange(endDay)));
+		if (begin.getFullYear()!=end.getFullYear())
+		{
+			alert('请不要跨年！');
+			document.getElementById('field_297e55a647ed14950147ed3566c10004').value = '';
+			return;
+		}
+		if ((begin.getFullYear()==end.getFullYear()) && (begin.getMonth()!=end.getMonth()))
+		{
+			alert('请不要跨月');
+			document.getElementById('field_297e55a647ed14950147ed3566c10004').value = '';
+			return;
+		}
+	}
+
+}</span></code></pre></figure>
+
+                <p><strong>双休日判断：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">function getXinQi(obj){
+    var objvalue = obj.value;
+    if (objvalue)
+    {
+        var theday = new Date(Date.parse(dateFormatChange(objvalue)));
+		var xinqi = theday.getDay();
+        if (xinqi && xinqi!=0 && xinqi!=6)
+        {
+            alert('不是双休日！');
+            obj.value = '';
+            return;
+        }
+    }
+} </span></code></pre></figure>
+
+                <p><strong>比较两个日期的大小：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">function getDiff(beginDate,endDate){
+	var endDate = dateFormatChange(endDate);
+	var beginDate = dateFormatChange(beginDate);
+	var cha = Date.parse(endDate)-Date.parse(beginDate);
+    if (cha>=0){
+          return true;
+    }else{
+          return false;
+    }
+} </span></code></pre></figure>
+
+                <p><strong>获取当前日期、年、月、日等：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">var myDate = new Date();
+myDate.getYear();        //获取当前年份(2位)
+myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+myDate.getDate();        //获取当前日(1-31)
+myDate.getDay();         //获取当前星期X(0-6,0代表星期天)
+myDate.getTime();        //获取当前时间(从1970.1.1开始的毫秒数)
+myDate.getHours();       //获取当前小时数(0-23)
+myDate.getMinutes();     //获取当前分钟数(0-59)
+myDate.getSeconds();     //获取当前秒数(0-59)
+myDate.getMilliseconds();    //获取当前毫秒数(0-999)
+myDate.toLocaleDateString();     //获取当前日期
+var mytime=myDate.toLocaleTimeString();     //获取当前时间
+myDate.toLocaleString( );        //获取日期与时间</span></code></pre></figure>
+
+                <p><strong>日期时间控件官方网页：</strong></p>
+                <p><a href="http://www.my97.net/dp/demo/index.htm">http://www.my97.net/dp/demo/index.htm</a></p>
+
+
+                <h3 id="selectInfo">选择项</h3>
+                <p><strong>获取选择项选择的值：</strong></p>
+                <p><code>var item = document.getElementById('fieldid');</code></p>
+                <p><code>item.options[item.selectedIndex].value;</code></p>
+
+                <p><strong>给选择项设置只读：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">function setSelectReadOnly(fieldid){
+    var obj = document.getElementById(fieldid);
+    obj.style.display = 'none';
+    var span = document.createElement('&lt;span&gt;');
+    var objvalue = obj.options[obj.selectedIndex].text;
+    span.innerHTML = objvalue;
+    obj.parentNode.appendChild(span);
+} </span></code></pre></figure>
+
+                <h3 id="browserInfo">关联选择</h3>
+                <p><strong>关联选择变更触发事件：</strong></p>
+                <p><code>WeaverUtil.watch(document.getElementById('fieldId'),functionName);</code></p>
+                <p><strong>更改browser的数据源：（如下以表单中的联系人字段做例子）</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">WeaverUtil.load(function(){
+   document.getElementById('button_ff8080813ad5dc57013ad8bab0ff04ed').onclick=function(){refmodify();}//联系人
+
+});
+function refmodify(){
+     var param = 'sqlwhere=1=1';
+     var f1=document.getElementById('field_ff8080813ad5dc57013ad8bab08704e5');//客户
+     if(f1.value!=''&& f1.value!=null && f1.value!='null'){
+        param += ' and khmc=\''+f1.value+'\'';
+     }
+     getrefobj('field_ff8080813ad5dc57013ad8bab0ff04ed','field_ff8080813ad5dc57013ad8bab0ff04edspan','ff8080813ad5dc57013ad8deed82095a',param,'','0');
+     //参数说明：联系人的fieldID，联系人fieldspan,browser框的ID,过滤条件,显示URL，是否必填
+} </span></code></pre></figure>
+
+                <h3 id="textareaInfo">多行文本</h3>
+                <p><strong>多行文本在编辑时如果有数据的情况下自适应高度：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">WeaverUtil.load(function(){
+	setTextarea();
+});
+function setTextarea(){
+	var textarea = document.getElementById('field_40288067343ba12901343bf1eace067b');
+	var height = textarea.scrollHeight;
+	textarea.style.height = height+"px";
+}</span></code></pre></figure>
+
+                <h3 id="attachInfo">附件</h3>
+                <p><strong>附件在编辑状态下给附件设置只读：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">//附件只读
+function setAttachReadOnly(fieldid){
+	var obj = document.getElementById(fieldid);
+	var objvalue = obj.value;
+	var theparent = obj.parentNode;//获取父节点
+	var childs=theparent.childNodes; //获取所有子节点
+	for(var i=childs.length-1;i>=1;i--){//删除 除第一个&lt;input&gt;之外的所有子节点
+		theparent.removeChild(childs.item(i));
+	}
+	DWREngine.setAsync(false);
+	var arys = new Array();
+	arys = objvalue.split(',');
+	for(var i=0;i&lt;arys.length;i++){
+		var sql='select objname from attach where id=\''+arys[i]+'\''; //查询附件的名称
+		DataService.getValues(sql,{
+			callback:function(data){
+				if(data && data.length>0)
+				{
+					//alert(data[0].OBJNAME);
+					var newNote = document.createElement('&lt;a&gt;');//创建&lt;a&gt;节点
+					newNote.href = '/ServiceAction/com.eweaver.document.file.FileDownload?attachid='+arys[i]+'&isdownload=1&nIndex=1';
+					newNote.innerHTML = data[0].OBJNAME;
+					theparent.appendChild(newNote);//增加子节点
+					theparent.appendChild(document.createElement('&lt;br&gt;'));
+				}
+			}
+		});
+	}
+	DWREngine.setAsync(true);
+}
+</span></code></pre></figure>
+
+                <p><strong>带出附件的值：</strong></p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">WeaverUtil.load(function(){
+	addDiv(document.getElementById('field_1128813645d40a5f0145d495f6534111').value,'2828813645d40a5f0145d495f6534d85');
+});
+
+
+function addDiv(objvalue,fid){
+	var attach = objvalue;
+	var arys = new Array();
+	if(attach.length>32){
+		arys = attach.split(',');
+	}else arys[0] = attach;
+	var fdiv = document.getElementById('filelist_'+fid);
+	fdiv.style.display = '';
+	while(fdiv.hasChildNodes()){//当div下还存在子节点时 循环继续
+		fdiv.removeChild(fdiv.firstChild);
+	}
+	for(var i=0;i&lt;arys.length;i++){
+		var attachname = SQL('select objname from attach where id=\''+attach+'\'');
+		var newdiv = document.createElement('div');
+		newdiv.id=arys[i];
+		fdiv.appendChild(newdiv);
+		newdiv.innerHTML = attachname;
+		var a = document.createElement('a');
+		a.id='img_'+arys[i];
+		a.href = 'javascript:deltheAttach(\'2828813645d40a5f0145d495f6534d85\',\''+arys[i]+'\')';
+		newdiv.appendChild(a);
+		var img = document.createElement('img');
+		img.width='23';
+		img.height='22';
+		img.className ='addfile';
+		img.src='/images/base/delete.GIF';
+		a.appendChild(img);
+	}
+}
+
+function deltheAttach(id1,id2){
+    var fdiv = document.getElementById('filelist_'+id1);
+    var subdiv = document.getElementById(id2);
+    fdiv.removeChild(subdiv);
+    var objvalue = document.getElementById('field_'+id1).value;
+    if(objvalue.indexOf(id2)>-1){
+        objvalue = objvalue.replace(id2,'');
+    }
+    var reg = new RegExp(',,','g');
+    objvalue = objvalue.replace(reg,',');
+    document.getElementById('field_'+id1).value = objvalue;
+}
+
+</span></code></pre></figure>
+            </section>
+
+            <section id="interfaceInfo">
+                <h2>接口编写规范</h2>
+                <p>规范流程接口的书写规范</p>
+                <figure class="highlight">
+                    <ul>
+                        <li>进行List循环时先判断List是否为空:<code>if(tmpList!=null && tmpList.size()&gt;0)</code>；</li>
+                        <li>循环给某个String赋值用StringBuffer代替String，用StringBuffer的append()方法组装数据；</li>
+                        <li>更新同一个表的SQL操作能合并成一条语句尽量合并成一条；</li>
+                        <li>数据库操作尽量采用baseJdbcDao.getJdbcTemplate()模式：
+                            <p>更新：</p>
+                            <p><code>BaseJdbcDao baseJdbcDao = (BaseJdbcDao) BaseContext.getBean("baseJdbcDao");</code></p>
+                            <p><code>String upsql = "update humres set objname=? where id=?";</code></p>
+                            <p><code>baseJdbcDao.getJdbcTemplate().update(upsql,new Object[]{"张三","ff8080815f6b2c0d015f759a2c3e4bfc"});</code></p>
+                            <p>读取数据：</p>
+                            <p><code>String sql = "select id from humres where seclevel>?";</code></p>
+                            <p><code>List userList = baseJdbcDao.getJdbcTemplate().queryForList(sql,new Object[]{20});</code></p>
+                        </li>
+                    </ul>
+                </figure>
+
+                <p id="localDataInterface">本地数据库操作</p>
+                <figure class="highlight">
+                    <p><code>import com.eweaver.base.BaseContext</code></p>
+                    <p><code>import com.eweaver.base.BaseJdbcDao</code></p>
+                    <p><code>BaseJdbcDao baseJdbcDao = (BaseJdbcDao) BaseContext.getBean("baseJdbcDao");</code></p>
+                </figure>
+
+                <p>EAS数据库操作(192.168.0.233)</p>
+                <figure class="highlight">
+                    <p><code>import com.eweaver.base.BaseContext</code></p>
+                    <p><code>import com.eweaver.base.BaseJdbcDao</code></p>
+                    <p><code>BaseJdbcDao easBaseJdbcDao = (BaseJdbcDao)BaseContext.getBean("easBaseJdbcDao");</code></p>
+                </figure>
+
+                <p>WX数据库操作(192.168.7.75)</p>
+                <figure class="highlight">
+                    <p><code>import com.eweaver.base.BaseContext</code></p>
+                    <p><code>import com.eweaver.base.BaseJdbcDao</code></p>
+                    <p><code>BaseJdbcDao wxBaseJdbcDao = (BaseJdbcDao)BaseContext.getBean("wxBaseJdbcDao");</code></p>
+                </figure>
+
+                <p id="mailInterface">邮件发送</p>
+                <figure class="highlight">
+                    <p><small>需要导入的包：</small></p>
+                    <p><code>import com.eweaver.base.BaseContext;</code></p>
+                    <p><code>import com.eweaver.base.msg.EweaverMessage;</code></p>
+                    <p><code>import com.eweaver.base.msg.EweaverMessageProducer;</code></p>
+                    <p><small>代码内容：</small></p>
+                    <p><code>EweaverMessageProducer eweaverMessageProducer =(EweaverMessageProducer)BaseContext.getBean("eweaverMessageProducer");</code></p>
+                    <p><small>/** 收件人的humresId **/</small></p>
+                    <p><code>String userid = "";</code></p>
+                    <p><small>/** 邮件标题 **/</small></p>
+                    <p><code>String title = "";</code></p>
+                    <p><small>/** 邮件内容 **/</small></p>
+                    <p><code>String msg = "";</code></p>
+                    <p><small>/** 发送邮件接口代码，固定写法，无需修改 **/</small></p>
+                    <p><code>EweaverMessage msgobj = new EweaverMessage(EweaverMessage.MESSAGE_TYPE_EMAIL, "", userid, msg);</code></p>
+                    <p><code>msgobj.setMsgtitle(title);</code></p>
+                    <p><code>eweaverMessageProducer.send(msgobj);</code></p>
+                </figure>
+
+            </section>
+
+            <section id="linuxInfo">
+                <h2>Linux常用命令介绍</h2>
+                <p>掌握Linux常用命令，能进行日常的维护</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>说明</th>
+                            <th>命令</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>复制文件夹</td>
+                            <td><code>cp -r tomcat tomcat_bak_0928</code></td>
+                        </tr>
+                        <tr>
+                            <td>修改HostName</td>
+                            <td><code>vim /etc/hosts</code></td>
+                        </tr>
+                        <tr>
+                            <td>压缩文件夹</td>
+                            <td><code>tar -zcvf tomcat.tar.gz tomcat</code></td>
+                        </tr>
+                        <tr>
+                            <td>解压缩</td>
+                            <td><code>tar -zxvf tomcat.tar.gz</code></td>
+                        </tr>
+                        <tr>
+                            <td>删除tmp文件夹，谨慎操作</td>
+                            <td><code>rm -rf /usr/local/tomcat/tmp</code></td>
+                        </tr>
+                        <tr>
+                            <td>查看tomcat相关进程</td>
+                            <td><code>ps -ef |grep tomcat</code></td>
+                        </tr>
+                        <tr>
+                            <td>结束进程id为522的进程</td>
+                            <td><code>kill -9 522</code></td>
+                        </tr>
+                        <tr>
+                            <td>给文件赋权</td>
+                            <td><code>chmod 777 ***.txt</code></td>
+                        </tr>
+                        <tr>
+                            <td>给文件夹赋权</td>
+                            <td><code>Chmod -R 777 Bin/</code></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="permissionSet">
+                <h2>权限配置说明</h2>
+                <p>
+                    权限分为：查看、新建、编辑、删除、共享，权限之间存在包含的关系。给分类或流程每配置一条权限规则则生成分类数据或权限数据时就多了一份权限数据（这一份权限数据根据规则的不同生成的数量也不同，若选择了某个部门，权限数据量为部门所有员工之和）</p>
+                <figure class="highlight">
+                    <ul>
+                        <li>配置新建权限，可以查看和编辑自己新建的数据，无法删除；</li>
+                        <li>配置编辑权限，可编辑具有查看权限的数据，无法新建、删除；</li>
+                        <li>配置删除权限，无法新建，可查看、编辑、删除所有数据；</li>
+                        <li>配置共享权限，可查看、编辑所有数据，无法新建、删除。</li>
+                    </ul>
+                </figure>
+
+                <p>单条流程 共享权限重构：</p>
+                <p><code>http://192.168.0.76:8066/workflowtransfer.jsp?workflowid=40288067343ba1290134409c1ea12253&requestid=402880ce5f46148a015f4827011f50c7</code>
+                </p>
+
+                <p>单条分类 某个权限设置权限重构：</p>
+                <p><code>http://192.168.0.76:8066/categorytransfer.jsp?isdocbase=0&categoryid=40288067343ba1290134409c1ea12253&ruleid=ff8080815f6b2c0d015f759a2c3e4bfc&requestid=402880ce5f46148a015f4827011f50c7</code>
+                </p>
+
+                <p>单条分类 权限重构：</p>
+                <p><code>http://192.168.0.76:8066/categorytransfer.jsp?isdocbase=0&categoryid=40288067343ba1290134409c1ea12253&requestid=402880ce5f46148a015f4827011f50c7</code>
+                </p>
+
+            </section>
+
+
+            <section id="dbInfo">
+                <h2>数据库操作规范</h2>
+                <p>数据库日常操作的规范，掌握常用的CRUD操作</p>
+                <p><strong class="text-danger">重要提示：更新表数据时请使用update语句进行更新，千万不要用select for update的形式进行更新，因为for update会锁住整张表，导致正常的业务只能等待，一旦忘记解锁将导致系统崩溃。</strong></p>
+                <h2 id="offtenSql">常用SQL</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <colgroup>
+                            <col class="col-xs-6">
+                            <col class="col-xs-2">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>说明</th>
+                            <th>命令</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>查找某个部门下的所有员工(包括兼岗)</td>
+                            <td><code>select * from humres where exists(select * from (select oid from orgunitlink start with  oid='8a80898550caa8720150f5a530ab259f'  connect by prior oid=pid ) t where instr(humres.orgids,oid)>0)</code></td>
+
+                        </tr>
+                        <tr>
+                            <td>查询部门的所有下属部门</td>
+                            <td><code>SELECT * FROM (SELECT a.id,a.objname,b.pid FROM ORGUNIT a,ORGUNITLINK b WHERE a.ID=b.OID) orgu
+                                START WITH orgu.id='402883253280f3db01328113735c0002' CONNECT BY PRIOR ORGU.id=orgu.pid</code></td>
+
+                        </tr>
+                        <tr>
+                            <td>查询组织下的所有岗位</td>
+                            <td><code>select a.id,a.objname from stationinfo a where exists (select id from (SELECT id FROM (SELECT a.id,a.objname,b.pid FROM ORGUNIT a,ORGUNITLINK b WHERE a.ID=b.OID and a.isdelete=0 and a.unitstatus='402880d31a04dfba011a04e4db5f0003') orgu START WITH orgu.id='402888fa37a05d2c0137a07cc5820003' CONNECT BY PRIOR ORGU.id=orgu.pid) b where a.orgid=b.id) and a.STATIONSTATUS='402880d319eb81720119eba4e1e70004' and a.isdelete=0</code></td>
+
+                        </tr>
+                        <tr>
+                            <td>查找组织的所有上级组织</td>
+                            <td><code>select id,objname,pid from (SELECT CONNECT_by_root orgt.objname,orgt.* FROM (SELECT a.id,a.objname,b.pid FROM ORGUNIT a,ORGUNITLINK b WHERE a.ID=b.OID) orgt START WITH orgt.ID='402864d249796b880149796d236c00fb' CONNECT BY PRIOR orgt.pid=orgt.id) order by rownum desc</code></td>
+                        </tr>
+                        <tr>
+                            <td>ORACLE中生成32位ID</td>
+                            <td><code>select  sys_guid() from dual</code></td>
+                        </tr>
+                        <tr>
+                            <td>当前节点</td>
+                            <td><code>select b.objname as 当前节点 from REQUESTINFO a,nodeinfo b where a.CURRENTNODEID=b.id and a.requestid={requestid}</code></td>
+                        </tr>
+                        <tr>
+                            <td>当前审批人</td>
+                            <td><code>select wmsys.wm_concat(a.objname) as 当前审批人 from humres a,REQUESTOPERATORS rs where a.id=rs.userid and rs.requestid={requestid}</code></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><code></code></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 id="procedure">数据库优化</h2>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;已定义的优化数据库表的存储过程说明</p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-7">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>存储过程名</th>
+                            <th>描述</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                <code>P_Delete_notify_link(date:varchar2)</code>
+                            </th>
+                            <td>删除小于date的notify，notifyreceiverlink两张表的数据，定期清理这两张表，提高流程提醒的查询效率</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                <code>P_Delete_log(date:varchar2)</code>
+                            </th>
+                            <td>删除小于date的log表的数据，定期清理这张表，提高查询效率</td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        <tr>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="tableInfo">
+                <h2>系统表结构说明</h2>
+                <h3 id="selectItemTable">下拉框</h3>
+                <p class="text-center"><strong>SELECTITEM</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>可否为空</th>
+                            <th>缺省值</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>NO</td>
+                            <td>null</td>
+                            <td>自动生成32为ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJNAME</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>名称</td>
+                        </tr>
+                        <tr>
+                            <td>OBJDESC</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>描述，部分系统下拉框存放条件，如共享人员定义、共享岗位定义等。</td>
+                        </tr>
+                        <tr>
+                            <td>PID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>上级ID</td>
+                        </tr>
+                        <tr>
+                            <td>TYPEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>对应SELECTITEMTYPE表中的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>DSPORDER</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>排序</td>
+                        </tr>
+                        <tr>
+                            <td>COL1</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否无效，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>ISDELETE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否逻辑删除，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>IMAGEFIELD</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>图片路径，配置后选择项前面会显示图片</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="text-center"><strong>SELECTITEMTYPE</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>可否为空</th>
+                            <th>缺省值</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>NO</td>
+                            <td>null</td>
+                            <td>自动生成32为ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJNAME</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>名称</td>
+                        </tr>
+                        <tr>
+                            <td>PID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>上级ID</td>
+                        </tr>
+                        <tr>
+                            <td>DSPORDER</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>排序</td>
+                        </tr>
+                        <tr>
+                            <td>ISDELETE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否逻辑删除，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>MODULEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>所属模块，对应MODULE表中的ID字段</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="browserTable">关联选择框</h3>
+                <p class="text-center"><strong>REFOBJ</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>可否为空</th>
+                            <th>缺省值</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>NO</td>
+                            <td>null</td>
+                            <td>自动生成32为ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJNAME</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>名称</td>
+                        </tr>
+                        <tr>
+                            <td>REFURL</td>
+                            <td>CLOB</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>关联URL</td>
+                        </tr>
+                        <tr>
+                            <td>REFTABLE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>数据库表名</td>
+                        </tr>
+                        <tr>
+                            <td>KEYFIELD</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>主字段</td>
+                        </tr>
+                        <tr>
+                            <td>VIEWFIELD</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>显示名称</td>
+                        </tr>
+                        <tr>
+                            <td>COL1</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否无效，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>VIEWURL</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>显示URL</td>
+                        </tr>
+                        <tr>
+                            <td>FILTER</td>
+                            <td>VARCHAR2(512)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>过滤条件</td>
+                        </tr>
+                        <tr>
+                            <td>ISMULTI</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否多选，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>ISPERMOBJ</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否授权对象，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>ISDELETE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否逻辑删除，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>SELFIELD</td>
+                            <td>VARCHAR2(2048)</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>直接录入查询字段</td>
+                        </tr>
+                        <tr>
+                            <td>ISDIRECTINPUT</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否直接录入</td>
+                        </tr>
+                        <tr>
+                            <td>MODULEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>所属模块，对应MODULE表中的ID字段</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="categoryTable">分类</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>可否为空</th>
+                            <th>缺省值</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>NO</td>
+                            <td>null</td>
+                            <td>自动生成32为ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJNAME</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>名称</td>
+                        </tr>
+                        <tr>
+                            <td>PID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>上级ID</td>
+                        </tr>
+                        <tr>
+                            <td>DSPORDER</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>排序</td>
+                        </tr>
+                        <tr>
+                            <td>ISDELETE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否逻辑删除，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>MODULEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>所属模块，对应MODULE表中的ID字段</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <!--end of #mathematics-->
+        </div>
+
+    </div>
+    <!--end of .row-->
+</div>
+<!--end of .container-->
+
+<footer>
+    <p class="text-center">@Author Jeffrey.Liu &nbsp;@Email:906956368@qq.com
+    </p>
+</footer>
+</body>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+<script src="/js/popper.min.js"></script>
+<script src="/plugin/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script>
+    $('#nav').affix({
+        offset: {
+            top: $('#nav').offset().top,
+            bottom: $('footer').outerHeight(true) + $('.application').outerHeight(true) + 40
+        }
+    });
+    //@ sourceURL=pen.js
+</script>
+
+</body>
+
+</html>
