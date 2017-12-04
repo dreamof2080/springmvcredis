@@ -573,7 +573,7 @@ function deltheAttach(id1,id2){
             <section id="tableInfo">
                 <h2>系统表结构说明</h2>
                 <h3 id="selectItemTable">下拉框</h3>
-                <p class="text-center"><strong>SELECTITEM</strong></p>
+                <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="选择项明细信息">SELECTITEM</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -653,7 +653,7 @@ function deltheAttach(id1,id2){
                     </table>
                 </div>
 
-                <p class="text-center"><strong>SELECTITEMTYPE</strong></p>
+                <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="选择项名称信息，与selectitem表的typeid对应">SELECTITEMTYPE</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -671,7 +671,7 @@ function deltheAttach(id1,id2){
                             <td>VARCHAR2(32)</td>
                             <td>NO</td>
                             <td>null</td>
-                            <td>自动生成32为ID</td>
+                            <td>自动生成32为ID，与selectitem表的typeid对应</td>
                         </tr>
                         <tr>
                             <td>OBJNAME</td>
@@ -713,7 +713,7 @@ function deltheAttach(id1,id2){
                 </div>
 
                 <h3 id="browserTable">关联选择框</h3>
-                <p class="text-center"><strong>REFOBJ</strong></p>
+                <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="关联选择框信息表">REFOBJ</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -836,6 +836,7 @@ function deltheAttach(id1,id2){
                 </div>
 
                 <h3 id="categoryTable">分类</h3>
+                <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="分类信息表">CATEGORY</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                         <thead>
@@ -856,18 +857,18 @@ function deltheAttach(id1,id2){
                             <td>自动生成32为ID</td>
                         </tr>
                         <tr>
-                            <td>OBJNAME</td>
-                            <td>VARCHAR2(256)</td>
-                            <td>YES</td>
-                            <td>null</td>
-                            <td>名称</td>
-                        </tr>
-                        <tr>
                             <td>PID</td>
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
                             <td>上级ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJNAME</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>名称</td>
                         </tr>
                         <tr>
                             <td>DSPORDER</td>
@@ -884,11 +885,501 @@ function deltheAttach(id1,id2){
                             <td>是否逻辑删除，0：否，1：是</td>
                         </tr>
                         <tr>
+                            <td>COL1</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否记录日志，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>WORKFLOWID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>审批工作流ID</td>
+                        </tr>
+                        <tr>
+                            <td>HUMRESID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>分类管理员ID</td>
+                        </tr>
+                        <tr>
+                            <td>CREATELAYOUTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>新建布局ID</td>
+                        </tr>
+                        <tr>
+                            <td>VIEWLAYOUTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>显示布局ID</td>
+                        </tr>
+                        <tr>
+                            <td>EDITLAYOUTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>编辑布局ID</td>
+                        </tr>
+                        <tr>
+                            <td>REFLAYOUTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>关联布局ID</td>
+                        </tr>
+                        <tr>
+                            <td>FORMID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>表单ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJDESC</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>表单ID</td>
+                        </tr>
+                        <tr>
+                            <td>MODULEID</td>
+                            <td>VARCHAR2(2000)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>描述</td>
+                        </tr>
+                        <tr>
+                            <td>REPORTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>报表ID</td>
+                        </tr>
+                        <tr>
+                            <td>ISFASTNEW</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否提交并新建。0：是，1：否</td>
+                        </tr>
+                        <tr>
                             <td>MODULEID</td>
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>所属模块，对应MODULE表中的ID字段</td>
+                            <td>模块ID</td>
+                        </tr>
+                        <tr>
+                            <td>UNIQUEFLITER</td>
+                            <td>VARCHAR2(512)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>唯一校验字段，需要判断的字段名，多个以“,”分隔</td>
+                        </tr>
+                        <tr>
+                            <td>ISAPPROVE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否文档审批</td>
+                        </tr>
+                        <tr>
+                            <td>DOCFIELD</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>文档字段ID</td>
+                        </tr>
+                        <tr>
+                            <td>IMPORTDETAIL</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否允许导入明细记录</td>
+                        </tr>
+                        <tr>
+                            <td>ACTIONCLAZZ</td>
+                            <td>VARCHAR2(100)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>接口类名</td>
+                        </tr>
+                        <tr>
+                            <td>DELETETYPE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>数据删除类型</td>
+                        </tr>
+                        <tr>
+                            <td>attachSavePath</td>
+                            <td>VARCHAR2(200)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>附件保存路径</td>
+                        </tr>
+                        <tr>
+                            <td>DOCATTACHCANEDIT</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>文档Office附件是否可编辑</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="文档与分类的关联关系表">CATEGORYLINK</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>可否为空</th>
+                            <th>缺省值</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>NO</td>
+                            <td>null</td>
+                            <td>自动生成32为ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>文档ID或卡片的RequestID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJTYPE</td>
+                            <td>VARCHAR2(256)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>文档或卡片对应的表名</td>
+                        </tr>
+                        <tr>
+                            <td>CATEGORYID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>分类ID</td>
+                        </tr>
+                        <tr>
+                            <td>ISDELETE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否删除。0：否，1：是</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 id="permissionTable">权限</h3>
+                <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="权限规则表">PERMISSIONRULE</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>字段名</th>
+                            <th>类型</th>
+                            <th>可否为空</th>
+                            <th>缺省值</th>
+                            <th>说明</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>ID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>NO</td>
+                            <td>null</td>
+                            <td>自动生成32为ID</td>
+                        </tr>
+                        <tr>
+                            <td>OBJID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>规则对象ID,对应分类、流程、文档的requestid</td>
+                        </tr>
+                        <tr>
+                            <td>ISTYPE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>权限规则类型</td>
+                        </tr>
+                        <tr>
+                            <td>OBJTABLE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>权限规则对应对象类型，如docbase，uf表</td>
+                        </tr>
+                        <tr>
+                            <td>OBJFIELD</td>
+                            <td>CLOB</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>权限规则调用字段ID</td>
+                        </tr>
+                        <tr>
+                            <td>SHARETYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>权限规则共享操作类型，对应SELECTITEMTYPE表中的共享类型(ID：402881e60bf4f747010bf4fcad5b0005 )</td>
+                        </tr>
+                        <tr>
+                            <td>ROLETYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否受角色作用域控制，0：否，1：是</td>
+                        </tr>
+                        <tr>
+                            <td>ORGOBJTYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>组织单元类型，对应SELECTITEMTYPE表中的共享组织单元定义(ID：402881ea0bf559c7010bf55e479f0013 )</td>
+                        </tr>
+                        <tr>
+                            <td>ORGSHARETYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>作用域，对应SELECTITEMTYPE表中的作用域(ID：402881ea0bfa0b45010bfa18ccee000 9)</td>
+                        </tr>
+                        <tr>
+                            <td>FORMFIELDID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>相关字段，权限规则调用字段ID</td>
+                        </tr>
+                        <tr>
+                            <td>ROLEOBJID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>角色ID，对应SYSROLE的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>USERSHARETYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>岗位作用域，对应SELECTITEMTYPE表中的岗位关系定义(ID：402880151176095801117665f7c3000 9)。</td>
+                        </tr>
+                        <tr>
+                            <td>ORGUNITTYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>组织类型</td>
+                        </tr>
+                        <tr>
+                            <td>ORGMANAGER</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>组织部门经理，0：安全级别，1：部门经理</td>
+                        </tr>
+                        <tr>
+                            <td>USEROBJTYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>人员类型，对应SELECTITEMTYPE表中的共享人员定义(ID：402881ea0bf559c7010bf55b290a000 5)</td>
+                        </tr>
+                        <tr>
+                            <td>ORGOBJID</td>
+                            <td>CLOB</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>组织单元ID，对应ORGUNIT的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>USERIDS</td>
+                            <td>CLOB</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>拥有操作权限的用户ID，对应HUMRES表的ID，格式为'xxxx,xxxx,xxxx'</td>
+                        </tr>
+                        <tr>
+                            <td>MINSECLEVEL</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>最低安全级别,相对于HUMRES人员表SECLEVEL安全级别字段而言</td>
+                        </tr>
+                        <tr>
+                            <td>WFOPERATORNODEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>节点操作者，对应NODEINFO的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>MAXSECLEVEL</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>最高安全级别,相对于HUMRES人员表SECLEVEL安全级别字段而言</td>
+                        </tr>
+                        <tr>
+                            <td>OPTTYPE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>操作类型，对应SELECTITEMTYPE表中的权限操作类型(ID：402880371fb07b8d011fb0889c890002)<p>2：创建，3：查看，6：监控，9：到期提醒，13：督办，15：编辑，105：删除，165：共享</p></td>
+                        </tr>
+                        <tr>
+                            <td>DOCATTOPTTYPE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>文档附件操作类型，对应SELECTITEMTYPE表中的权限操作类型(ID：402881ea0bfa7679010bfa854d8a000e)<p>1：附件不查看，3：附件查看，15：附件下载，105：附件删除</p></td>
+                        </tr>
+                        <tr>
+                            <td>WFOPTTYPE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>流程操作方式，对应SELECTITEMTYPE表中的流程操作方式(ID：402881ea0bfa7679010bfa86f3f70016 )</td>
+                        </tr>
+                        <tr>
+                            <td>STATIONOBJTYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td><p>岗位类型</p><p>对应SELECTITEMTYPE表中的共享岗位定义(ID：297e828210f211130110f21a5ae00006)</p></td>
+                        </tr>
+                        <tr>
+                            <td>STATIONID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>岗位ID，对应STATIONINFO的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>ORGREFTYPE</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td><p>组织维度</p><p>对应SELECTITEMTYPE表中的组织维度(ID：402881e510e8223c0110e83c36010016)</p></td>
+                        </tr>
+                        <tr>
+                            <td>LAYOUTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>PC页面编辑布局,对应FORMLAYOUT的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>LAYOUTID1</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>PC页面显示布局,对应FORMLAYOUT的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>PRIORITY</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>PC对应优先级别</td>
+                        </tr>
+                        <tr>
+                            <td>DETAILFILTER</td>
+                            <td>CHAR(1)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>操作详细描述</td>
+                        </tr>
+                        <tr>
+                            <td>ISDEFAULT</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>是否缺省默认</td>
+                        </tr>
+                        <tr>
+                            <td>ISDELETE</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>是否逻辑删除,1：是，0：否</td>
+                        </tr>
+                        <tr>
+                            <td>NODEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>0</td>
+                            <td>节点ID，对应NODEINFO的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>NOTIFYDEFINEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>提醒关联字段，对应NOTIFYDEFINE表ID</td>
+                        </tr>
+                        <tr>
+                            <td>CONDITION</td>
+                            <td>VARCHAR2(2048)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>出口条件</td>
+                        </tr>
+                        <tr>
+                            <td>ORDEROPT</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td><p>依次逐个审批排序方式</p><p>对应SELECTITEMTYPE表中的依次逐个审批排序方式(ID：03650E8B39D04B128F06CFF6E11BE594)</p></td>
+                        </tr>
+                        <tr>
+                            <td>COPYRULEID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td><p>单条权限ID</p><p>对应PERMISSIONRULE表的ID字段,用于单条权限重构功能</p></td>
+                        </tr>
+                        <tr>
+                            <td>MOBILELAYOUTID</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>手机页面编辑布局,对应FORMLAYOUT的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>MOBILELAYOUTID1</td>
+                            <td>VARCHAR2(32)</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>手机页面显示布局,对应FORMLAYOUT的ID字段</td>
+                        </tr>
+                        <tr>
+                            <td>MOBILEPRIORITY</td>
+                            <td>NUMBER</td>
+                            <td>YES</td>
+                            <td>null</td>
+                            <td>手机对应优先级别</td>
                         </tr>
                         </tbody>
                     </table>
@@ -922,6 +1413,9 @@ function deltheAttach(id1,id2){
         }
     });
     //@ sourceURL=pen.js
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
 </script>
 
 </body>
