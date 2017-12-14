@@ -13,8 +13,6 @@
 
 </head>
 
-<body>
-
 <body data-spy="scroll" data-target=".scrollspy">
 
 <div class="jumbotron">
@@ -30,6 +28,7 @@
 
         <div class="col-md-3 scrollspy">
             <ul id="nav" class="nav hidden-xs hidden-sm" data-spy="affix">
+                <li><a href="#layoutDesign">布局设计</a></li>
                 <li><a href="#jsInfo">常用JS</a>
                     <ul class="nav">
                         <li><a href="#textInfo"><span class="fa fa-angle-double-right"></span>单行文本</a>
@@ -49,6 +48,8 @@
                         <li><a href="#localDataInterface"><span class="fa fa-angle-double-right"></span>数据库操作</a>
                         </li>
                         <li><a href="#mailInterface"><span class="fa fa-angle-double-right"></span>邮件发送</a>
+                        </li>
+                        <li><a href="#sysuserInterface"><span class="fa fa-angle-double-right"></span>密码修改后清除缓存</a>
                         </li>
                     </ul>
                 </li>
@@ -71,12 +72,44 @@
                         </li>
                         <li><a href="#categoryTable"><span class="fa fa-angle-double-right"></span>分类</a>
                         </li>
+                        <li><a href="#permissionTable"><span class="fa fa-angle-double-right"></span>权限</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
         </div>
 
         <div class="col-md-9">
+            <section id="layoutDesign">
+                <h2>布局设计规范</h2>
+                <p>表单布局设计时应注意表单的简洁和美观，良好的设计可以给用户带来更好的体验，更清晰的填写表单</p>
+                <p>单行文本设置样式</p>
+                <div class="bs-callout bs-callout-info">
+                    <p>一般设置单行文本的style样式，添加属性width:80%，具体的宽度可根据场景调整</p>
+                    <p><code>&lt;TD class=FieldValue&gt;&lt;INPUT id=$4028806a4e84c319014e863c136423b2$ class=InputStyle2 <marK>style="width:80%"</marK> value=[必须输入]差旅费报销单(主表).开户行 name=40288067343ba1290134405a732a20e6&gt;&lt;/TD&gt;&lt;/TR&gt;</code></p>
+                </div>
+                <p>备注字段高度设置</p>
+                <div class="bs-callout bs-callout-info">
+                    <p>备注字段默认单独一行显示，在style里面设置width、height和margin属性</p>
+                    <p><code>&lt;TD class=FieldValue colSpan=3&gt;&lt;INPUT id=$40288067343ba1290134406e2a972177$ class=InputStyle2 <mark>style="width:80%;HEIGHT:73px;margin:5px 0;"</mark> value=[可编辑]差旅费报销单(主表).备注 name=40288067343ba1290134405a732a20e6&gt;&lt;/TD&gt;</code></p>
+                </div>
+                <p>添加显示的提示信息</p>
+                <div class="bs-callout bs-callout-info">
+                    <p>对于表单上的某些字段，可能需要显示的提示信息</p>
+                    <p><code>&lt;TD class=FieldValue&gt;&lt;INPUT id=$4028806a4e84c319014e863c136423b2$ class=InputStyle2 value=[必须输入]差旅费报销单(主表).开户行 name=40288067343ba1290134405a732a20e6 &gt;<mark>&lt;p style="color:#ff0000"&gt;备注：*若收款人为多个人，此处请填写“见附件”&lt;/p&gt;</mark>&lt;/TD&gt;</code></p>
+                </div>
+                <p>添加隐式的提示信息</p>
+                <div class="bs-callout bs-callout-info">
+                    <p>对于表单上的某些字段，可能需要隐式的提示信息</p>
+                    <p><code>&lt;TD class=FieldValue&gt;&lt;INPUT id=$4028806a4e84c319014e863c136423b2$ class=InputStyle2 style="width:60%" value=[必须输入]差旅费报销单(主表).开户行 name=40288067343ba1290134405a732a20e6&gt;<mark>&lt;img id="bank_title" src="/images/lightbulb.png"/&gt;</mark>&lt;/TD&gt;</code></p>
+                    <p>在js中添加提示信息</p>
+                    <p>
+                        <code>$('#bank_title').qtip({
+                            content: '请填写详细的开户银行信息！'
+                            });</code>
+                    </p>
+                </div>
+            </section>
             <section id="jsInfo">
                 <h2>常用JS</h2>
                 <p>规范表单中的JS书写规范，避免不同浏览器间的兼容性问题</p>
@@ -388,6 +421,40 @@ function deltheAttach(id1,id2){
                     <p><code>eweaverMessageProducer.send(msgobj);</code></p>
                 </figure>
 
+                <p id="sysuserInterface">修改密码后清除缓存</p>
+                <figure class="highlight">
+                    <p><small>需要导入的包：</small></p>
+                    <p><code>import com.eweaver.app.interfaces.HttpRequestUtils;</code></p>
+                    <p><code>import com.eweaver.base.BaseContext;</code></p>
+                    <p><code>import com.eweaver.base.security.model.Sysuser;</code></p>
+                    <p><code>import com.eweaver.base.security.service.logic.AcegiCacheManager;</code></p>
+                    <p><code>import com.eweaver.base.security.service.logic.SysuserService;</code></p>
+                    <p><code>import com.eweaver.base.selectitem.model.Selectitem;</code></p>
+                    <p><code>import com.eweaver.base.selectitem.service.SelectitemService;</code></p>
+                    <p><code>import java.util.List;</code></p>
+                    <p><small>代码内容：</small></p>
+                    <p><code>SysuserService sysuserService = (SysuserService) BaseContext.getBean("sysuserService");</code></p>
+                    <p><code>AcegiCacheManager acegiCacheManager = (AcegiCacheManager) BaseContext.getBean("acegiCacheManager");</code></p>
+                    <p><code>SelectitemService selectitemService = (SelectitemService)BaseContext.getBean("selectitemService");</code></p>
+                    <p><small>/** 根据员工的requestid获取sysuser **/</small></p>
+                    <p><code>String userId = "402881e70be6d209010be75668750014";</code></p>
+                    <p><code>Sysuser sysuser = sysuserService.getSysuserByObjid(userId);</code></p>
+                    <p><small>/** 本地acegi缓存清理 **/</small></p>
+                    <p><code>acegiCacheManager.modifyUserInCache(sysuser,sysuser.getLongonname());</code></p>
+                    <p><small>/** 集群acegi缓存清理 **/</small></p>
+                    <p><code>net.sf.json.JSONObject jsonObject = new net.sf.json.JSONObject();</code></p>
+                    <p><code>jsonObject.put("userid",sysuser.getObjid());</code></p>
+                    <p><code>jsonObject.put("sysUserId",sysuser.getId());</code></p>
+                    <p><code>List webList = selectitemService.getSelectitemListByTypeid("402880ce5f77f608015f7a60e8412f10");</code></p>
+                    <p><code>if(webList!=null){</code></p>
+                    <p><code>&nbsp;&nbsp;for(int i=0;i&lt;webList.size();i++){</code></p>
+                    <p><code>&nbsp;&nbsp;&nbsp;&nbsp;Selectitem selectitem = (Selectitem)webList.get(i);</code></p>
+                    <p><code>&nbsp;&nbsp;&nbsp;&nbsp;String webside = selectitem.getObjname();</code></p>
+                    <p><code>&nbsp;&nbsp;&nbsp;&nbsp;HttpRequestUtils.httpPost(webside+"/ServiceAction/com.eweaver.humres.base.servlet.HumresEvictAtion",jsonObject);</code></p>
+                    <p><code>&nbsp;&nbsp;}</code></p>
+                    <p><code>}</code></p>
+                </figure>
+
             </section>
 
             <section id="linuxInfo">
@@ -576,6 +643,13 @@ function deltheAttach(id1,id2){
                 <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="选择项明细信息">SELECTITEM</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-3">
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>字段名</th>
@@ -656,6 +730,13 @@ function deltheAttach(id1,id2){
                 <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="选择项名称信息，与selectitem表的typeid对应">SELECTITEMTYPE</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-3">
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>字段名</th>
@@ -716,6 +797,13 @@ function deltheAttach(id1,id2){
                 <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="关联选择框信息表">REFOBJ</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-3">
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>字段名</th>
@@ -839,6 +927,13 @@ function deltheAttach(id1,id2){
                 <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="分类信息表">CATEGORY</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-3">
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>字段名</th>
@@ -1038,6 +1133,13 @@ function deltheAttach(id1,id2){
                 <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="文档与分类的关联关系表">CATEGORYLINK</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-3">
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>字段名</th>
@@ -1091,6 +1193,13 @@ function deltheAttach(id1,id2){
                 <p class="text-center text-primary"><strong data-toggle="tooltip" data-placement="right" title="权限规则表">PERMISSIONRULE</strong></p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover">
+                        <colgroup>
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-1">
+                            <col class="col-xs-3">
+                        </colgroup>
                         <thead>
                         <tr>
                             <th>字段名</th>
@@ -1141,7 +1250,7 @@ function deltheAttach(id1,id2){
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>权限规则共享操作类型，对应SELECTITEMTYPE表中的共享类型(ID：402881e60bf4f747010bf4fcad5b0005 )</td>
+                            <td><p>权限规则共享操作类型</p><p>对应SELECTITEMTYPE表中的共享类型</p><p>(ID：402881e60bf4f747010bf4fcad5b0005)</p></td>
                         </tr>
                         <tr>
                             <td>ROLETYPE</td>
@@ -1155,14 +1264,14 @@ function deltheAttach(id1,id2){
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>组织单元类型，对应SELECTITEMTYPE表中的共享组织单元定义(ID：402881ea0bf559c7010bf55e479f0013 )</td>
+                            <td><p>组织单元类型</p><p>对应SELECTITEMTYPE表中的共享组织单元定义</p><p>(ID：402881ea0bf559c7010bf55e479f0013)</p></td>
                         </tr>
                         <tr>
                             <td>ORGSHARETYPE</td>
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>作用域，对应SELECTITEMTYPE表中的作用域(ID：402881ea0bfa0b45010bfa18ccee000 9)</td>
+                            <td><p>作用域</p><p>对应SELECTITEMTYPE表中的作用域</p><p>(ID：402881ea0bfa0b45010bfa18ccee0009)</p></td>
                         </tr>
                         <tr>
                             <td>FORMFIELDID</td>
@@ -1183,7 +1292,7 @@ function deltheAttach(id1,id2){
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>岗位作用域，对应SELECTITEMTYPE表中的岗位关系定义(ID：402880151176095801117665f7c3000 9)。</td>
+                            <td><p>岗位作用域</p><p>对应SELECTITEMTYPE表中的岗位关系定义</p><p>(ID：402880151176095801117665f7c30009)</p></td>
                         </tr>
                         <tr>
                             <td>ORGUNITTYPE</td>
@@ -1204,7 +1313,7 @@ function deltheAttach(id1,id2){
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>人员类型，对应SELECTITEMTYPE表中的共享人员定义(ID：402881ea0bf559c7010bf55b290a000 5)</td>
+                            <td><p>人员类型</p><p>对应SELECTITEMTYPE表中的共享人员定义</p><p>(ID：402881ea0bf559c7010bf55b290a0005)</p></td>
                         </tr>
                         <tr>
                             <td>ORGOBJID</td>
@@ -1246,28 +1355,28 @@ function deltheAttach(id1,id2){
                             <td>NUMBER</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>操作类型，对应SELECTITEMTYPE表中的权限操作类型(ID：402880371fb07b8d011fb0889c890002)<p>2：创建，3：查看，6：监控，9：到期提醒，13：督办，15：编辑，105：删除，165：共享</p></td>
+                            <td><p>操作类型</p><p>对应SELECTITEMTYPE表中的权限操作类型</p><p>(ID：402880371fb07b8d011fb0889c890002)</p><p>2：创建，3：查看，6：监控，9：到期提醒，13：督办，15：编辑，105：删除，165：共享</p></td>
                         </tr>
                         <tr>
                             <td>DOCATTOPTTYPE</td>
                             <td>NUMBER</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>文档附件操作类型，对应SELECTITEMTYPE表中的权限操作类型(ID：402881ea0bfa7679010bfa854d8a000e)<p>1：附件不查看，3：附件查看，15：附件下载，105：附件删除</p></td>
+                            <td><p>文档附件操作类型</p><p>对应SELECTITEMTYPE表中的权限操作类型</p><p>(ID：402881ea0bfa7679010bfa854d8a000e)</p><p>1：附件不查看，3：附件查看，15：附件下载，105：附件删除</p></td>
                         </tr>
                         <tr>
                             <td>WFOPTTYPE</td>
                             <td>NUMBER</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td>流程操作方式，对应SELECTITEMTYPE表中的流程操作方式(ID：402881ea0bfa7679010bfa86f3f70016 )</td>
+                            <td><p>流程操作方式</p><p>对应SELECTITEMTYPE表中的流程操作方式</p><p>(ID：402881ea0bfa7679010bfa86f3f70016 )</p></td>
                         </tr>
                         <tr>
                             <td>STATIONOBJTYPE</td>
                             <td>VARCHAR2(32)</td>
                             <td>YES</td>
                             <td>null</td>
-                            <td><p>岗位类型</p><p>对应SELECTITEMTYPE表中的共享岗位定义(ID：297e828210f211130110f21a5ae00006)</p></td>
+                            <td><p>岗位类型</p><p>对应SELECTITEMTYPE表中的共享岗位定义</p><p>(ID：297e828210f211130110f21a5ae00006)</p></td>
                         </tr>
                         <tr>
                             <td>STATIONID</td>
@@ -1417,7 +1526,5 @@ function deltheAttach(id1,id2){
         $('[data-toggle="tooltip"]').tooltip();
     })
 </script>
-
-</body>
 
 </html>
