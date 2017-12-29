@@ -33,6 +33,8 @@
                     <ul class="nav">
                         <li><a href="#textInfo"><span class="fa fa-angle-double-right"></span>单行文本</a>
                         </li>
+                        <li><a href="#dateInfo"><span class="fa fa-angle-double-right"></span>日期</a>
+                        </li>
                         <li><a href="#selectInfo"><span class="fa fa-angle-double-right"></span>选择项</a>
                         </li>
                         <li><a href="#browserInfo"><span class="fa fa-angle-double-right"></span>关联选择</a>
@@ -150,6 +152,33 @@
     obj.parentNode.appendChild(span);
 }</span><p>2、通过jQuery方式：</p><span class="nt">jQuery('#fieldId').attr('readonly','readonly');
 jQuery('#fieldId_span').remove();</span></code></pre></figure>
+                <h3 id="dateInfo">日期</h3>
+                <p>日期格式转换</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">dateFormatChange('2017-01-01')<p>返回值：2017/01/01</p></span></code></pre></figure>
+
+                <p>获取某个日期的月份</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getMonthByDate('2017-01-01')<p>返回值：返回 1</p></span></code></pre></figure>
+
+                <p>获取当前日期的月份</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getMonthByDate()<p>返回值：当前月份</p></span></code></pre></figure>
+
+                <p>获取某个日期的年份</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getYearByDate('2017-01-01')<p>返回值：2017</p></span></code></pre></figure>
+
+                <p>获取当前日期的年份</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getYearByDate()<p>返回值：当前日期年份</p></span></code></pre></figure>
+
+                <p>下一月(加30天)</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getNextMonthDay('2017-01-05')<p>返回值：2017/2/4</p></span></code></pre></figure>
+
+                <p>上一月(减30天)</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getBeforeMonthDay('2017-01-05')<p>返回值：2016/12/6</p></span></code></pre></figure>
+
+                <p>后一天</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getNextDay('2017-01-05')<p>返回值：2017/1/6</p></span></code></pre></figure>
+
+                <p>前一天</p>
+                <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">getBeforeDay('2017-01-05')<p>返回值：2017/1/4</p></span></code></pre></figure>
 
                 <p>单行文本为日期字段时需转换日期时间格式为：'2012/12/12 08:01:01' 此格式支持所有浏览器，解决浏览器兼容问题：</p>
                 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">function dateFormatChange(DateOne){
